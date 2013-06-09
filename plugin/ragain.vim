@@ -7,7 +7,7 @@ function! s:run(reset)
 endfunction
 
 function! s:has_set_cmd()
-  return exists("t:runagain_cmd")
+  return exists("t:ragain_cmd")
 endfunction
 
 function! s:set_and_run(...)
@@ -21,19 +21,19 @@ function! s:set_and_run(...)
 endfunction
 
 function! s:set_cmd()
-  if (exists("b:runagain_cmd"))
-    call s:set_cmd_as(b:runagain_cmd)
+  if (exists("b:ragain_cmd"))
+    call s:set_cmd_as(b:ragain_cmd)
   else
-    throw "Ragain: b:runagain_cmd not found"
+    throw "Ragain: b:ragain_cmd not found"
   endif
 endfunction
 
 function! s:set_cmd_as(cmd)
-  let t:runagain_cmd = a:cmd
+  let t:ragain_cmd = a:cmd
 endfunction
 
 function! s:run_cmd()
-  exec t:runagain_cmd
+  exec t:ragain_cmd
 endfunction
 
 command -bang RagainRun call s:run("!" == "<bang>")
