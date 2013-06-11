@@ -36,7 +36,7 @@ function! s:run_cmd()
   exec t:ragain_cmd
 endfunction
 
-command -bang -complete=command RagainRun
+command -bang RagainRun
       \ call s:run("!" == "<bang>")
 command -nargs=1 -complete=command RagainSetAndRun
       \ call s:set_and_run(<q-args>)
