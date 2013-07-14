@@ -1,5 +1,5 @@
 function! s:run(reset)
-  if (a:reset || !s:has_set_cmd())
+  if a:reset || !s:has_set_cmd()
     call s:set_and_run()
   else
     call s:run_cmd()
@@ -11,7 +11,7 @@ function! s:has_set_cmd()
 endfunction
 
 function! s:set_and_run(...)
-  if (a:0 == 1)
+  if a:0 == 1
     call s:set_cmd_as(a:1)
   else
     call s:set_cmd()
@@ -21,7 +21,7 @@ function! s:set_and_run(...)
 endfunction
 
 function! s:set_cmd()
-  if (exists("b:ragain_cmd"))
+  if exists("b:ragain_cmd")
     call s:set_cmd_as(b:ragain_cmd)
   else
     throw "Ragain: b:ragain_cmd not found"
