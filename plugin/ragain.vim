@@ -1,3 +1,6 @@
+let s:type_funcref = type(function("type"))
+let s:type_string = type("")
+
 function! s:run(reset)
   if a:reset || !s:has_set_cmd()
     call s:set_and_run()
@@ -29,7 +32,13 @@ function! s:set_cmd()
 endfunction
 
 function! s:set_cmd_as(cmd)
-  let t:ragain_cmd = a:cmd
+  if type(a:cmd) == s:type_string
+    let t:ragain_cmd = a:cmd
+  elseif type(a:cmd) == s:type_funcref
+    let t:ragain_cmd = a:cmd()
+  else
+    raise "Ragain: can't use " . a:cmd . " as command"
+  end
 endfunction
 
 function! s:run_cmd()
