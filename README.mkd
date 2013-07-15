@@ -4,8 +4,10 @@ Run the same command over and over again in Vim.
 
 ## Feature
 
-- Run a Vim command, saving it for later runs
-- Should work with any Vim command
+- Run a Vim command, saving it for later runs. Think unit test, ad-hoc script...
+
+- Should work with any Vim command. Try [Vimux], [Dispatch], or plain old
+  [!][bang].
 
 ## Quick Example
 
@@ -18,3 +20,7 @@ $ vim lib/whatever.rb
 ```
 
 See the [documentation](doc/ragain.txt) for more.
+
+[Vimux]: https://github.com/benmills/vimux
+[Dispatch]: https://github.com/tpope/vim-dispatch
+[bang]: http://vimdoc.sourceforge.net/htmldoc/various.html#:!
