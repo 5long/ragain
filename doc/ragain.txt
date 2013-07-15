@@ -1,0 +1,160 @@
+*ragain.txt*    Remember a command for running again later         *ragain*
+
+
+CONTENTS
+===========================================================================
+
+ 1.  Introduction                                     |ragain-introduction|
+ 2.  Requirements                                     |ragain-requirements|
+ 3.  Installation                                     |ragain-installation|
+ 4.  Usage                                            |ragain-usage|
+   4.1 Quick Start                                    |ragain-quickstart|
+   4.2 Reset to a New Command                         |ragain-reset-cmd|
+   4.3 Define Key Mapping                             |ragain-key-mappings|
+   4.4 Running Ad-hoc Command                         |ragain-set-and-run|
+ 5. Feedback                                          |ragain-feedback|
+ 6. License                                           |ragain-license|
+
+
+Introduction                                          *ragain-introduction*
+===========================================================================
+
+Ragain is short for "run again". When you want to test out some ad-hoc
+script to validate your understanding, or running focused unit test, or
+you're just going nuts in the modify-compile-run loop, you might want to
+run the same command over and over. Ragain can help you with this.
+
+
+Requirements                                          *ragain-requirements*
+===========================================================================
+
+Ragain is written in vimscript. It should work with any Vim compiled with
+|+eval| feature.
+
+
+Installation                                          *ragain-installation*
+===========================================================================
+
+It is recommended to install ragain via one of the modern Vim plugin
+managers:
+
+- pathongen: https://github.com/tpope/vim-pathogen
+- NeoBundle: https://github.com/Shougo/neobundle.vim
+- VAM: https://github.com/MarcWeber/vim-addon-manager
+
+The source code of ragain is hosted at https://github.com/5long/ragain
+
+Take NeoBundle for example, installation should be as simple as putting
+>
+    NeoBundle '5long/ragain'
+<
+in your |vimrc| and run `NeoBundleUpdate`.
+
+
+Usage                                                        *ragain-usage*
+===========================================================================
+
+A Quick Start~                             *:RagainRun* *ragain-quickstart*
+
+The idea of ragain is essentially:
+
+- You set `b:ragain_cmd` to tell ragain what command to run for the current
+  buffer.
+- The first time you run `:RagainRun`, the command is run and saved.
+- Running `:RagainRun` later stills runs the saved command, even if you're
+  focusing on another buffer.
+
+Let's go through an example in the Ruby programming language:
+
+First, you can configure the default command via |ftpluin| like this:
+>
+    " In ~/.vim/ftpluin/ruby.vim
+    let b:ragain_cmd = "!ruby " . expand("%")
+<
+Later, in a Ruby script buffer, run the following command:
+>
+    :RagainRun
+<
+And you'll see the script got executed. Now run the `:RagainRun` command in
+a different buffer, you'll notice that the previous Ruby script is run
+again.
+
+Reset to a New Commandmand~                *:RagainRun!* *ragain-reset-cmd*
+
+When you're done with the previous buffer and start working on a different
+buffer, you can first focus on the new buffer and run the command
+`:RagainRun!` (i.e. the bang-version of `:RagainRun`) which works pretty
+much like `:RagainRun`, but first discarding any previously saved commands.
+
+Define Key Mapping~                                   *ragain-key-mappings*
+
+Now that you have mastered the most-common use case of ragain, you might
+want to define custom key mappings for ragain. Ragain doesn't define any
+default key mappings. But it does have mapping entries for you:
+
+<Plug>RagainRun                                           *<Plug>RagainRun*
+                    Key mapping to run `:RagainRun`. Example:
+>
+                    nmap <leader>r <Plug>RagainRun
+<
+
+<Plug>RagainResetAndRun                           *<Plug>RagainResetAndRun*
+                    Key mapping to run `:RagainRun!`. Example:
+>
+                    nmap <leader>R <Plug>RagainResetAndRun
+<
+
+That'd be handy.
+
+Running Ad-hoc Command~             *:RagainSetAndRun* *ragain-set-and-run*
+
+If you found that
+
+- More than one common command is needed. A single `b:ragain_cmd` is not
+  enough.
+- You want to run ad-hoc command with ragain. A static `b:ragain_cmd` does
+  not suffice.
+
+The `:RagainSetAndRun` command is exactly for you. It takes an arbitary
+Vim command, runs it, and saves it for later runs of `:RagainRun`. Put it
+in another way, `:RagainSetAndRun <c-r>=b:ragain_cmd<cr>` is equivalent
+to `:RagainRun!`.
+
+If any arguments are supplied, they will be saved and passed to the command
+as well.
+
+`:RagainSetAndRun` also supports tab completion. Say if you have
+Unite.vim and NeoBundle.vim installed:
+>
+    :RagainSetAndRun Uni<tab>
+    " expands to
+    :RagainSetAndRun Unite
+
+    :RagainSetAndRun Unite ne<tab>
+    " expands to 
+    :RagainSetAndRun Unite neobundle
+<
+
+As long as your favorite Vim plugin supports a command / function
+interface, `:RagainSetAndRun` can play well with it.
+
+A common pattern is using current buffer's filename as argument. I'm using
+this mapping:
+>
+    nmap <leader>mr :RagainSetAndRun  <c-r>=expand('%')<CR><s-left><left>
+<
+
+That's pretty much all of ragain for now. Happy running.
+
+
+Feedback                                                  *ragain-feedback*
+===========================================================================
+
+For any feature request, bug report and random idea, feel free to create an
+issue at https://github.com/5long/ragain/issues.
+
+
+License                                                    *ragain-license*
+===========================================================================
+
+MIT licensed. See the LICENSE file for a complete copy.

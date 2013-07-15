@@ -1,0 +1,20 @@
+# Ragain
+
+Run the same command over and over again in Vim.
+
+## Feature
+
+- Run a Vim command, saving it for later runs
+- Should work with any Vim command
+
+## Quick Example
+
+```
+$ vim lib/whatever.rb
+# Hack hack
+:RagainSetAndRun !rake test
+# Hack hack
+:RagainRun " This runs `!rake test` again
+```
+
+See the [documentation](doc/ragain.txt) for more.
