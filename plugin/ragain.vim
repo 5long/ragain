@@ -38,10 +38,13 @@ function! s:set_cmd_as(cmd)
     let t:ragain_cmd = a:cmd()
   else
     raise "Ragain: can't use " . a:cmd . " as command"
-  end
+  endif
 endfunction
 
 function! s:run_cmd()
+  if !s:has_set_cmd()
+    raise "No command has been set yet."
+  endif
   exec t:ragain_cmd
 endfunction
 
