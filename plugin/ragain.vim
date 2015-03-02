@@ -53,5 +53,5 @@ command! -bang RagainRun
 command! -nargs=1 -complete=command RagainSetAndRun
       \ call s:set_and_run(<q-args>)
 
-nnoremap <silent> <unique> <Plug>RagainRun :RagainRun<CR>
-nnoremap <silent> <unique> <Plug>RagainResetAndRun :RagainRun!<CR>
+nnoremap <silent> <Plug>RagainRun :RagainRun<CR>
+nnoremap <silent> <Plug>RagainResetAndRun :RagainRun!<CR>
